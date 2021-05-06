@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <h2>All Products</h2>
+        <ul id="products"></ul>
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="prodId" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="product"></p>
+    </div>
+    <script>
+        const URI = '../api/products';
+        $(document).ready(function () {
+            // Send an AJAX request
+            $.getJSON(URI)
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                    });
+                });
+        });
+        function formatItem(item) {
+            return item.Name + ': $' + item.Price;
+        }
+
+        function find() {
+            let button = $('#prodId').val();
+            console.log(button);
+            $.getJSON(`${URI}/${button}`).done(function (data) {
+                $('#product').text(formatItem(data));
+            });
+        }
+    </script>
+</body>
+
+</html>
