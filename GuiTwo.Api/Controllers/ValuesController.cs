@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace GuiTwo.Api.Controllers
 {
-    public class ProductsController : ApiController
+    public class ValuesController : ApiController
     {
         Product[] products = new Product[]
         {
@@ -16,20 +17,20 @@ namespace GuiTwo.Api.Controllers
             new Product { Id = 2, Name = "Yo-yo", Category = "Toys", Price = 3.75M },
             new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M }
         };
+        public void Post()
+        {
 
-        public IEnumerable<Product> GetAllProducts() => products;
-
-        public IHttpActionResult GetProduct(int id) {
-            var target = products.SingleOrDefault(x => x.Id == id);
-            if (target != default)
-                return Ok(target);
-            else
-                return NotFound();
         }
 
-        public IHttpActionResult GetProductByCategory(string categoty)
+        public HttpResponseMessage Get()
         {
-            return Ok(products.Where(x => string.Equals(x.Category, categoty, StringComparison.OrdinalIgnoreCase)));
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK,products);
+            //response.Content = new StringContent("Hello World!", Encoding.Unicode);
+            //response.Headers.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue()
+            //{
+            //    MaxAge = TimeSpan.FromSeconds(12)
+            //};
+            return response;
         }
     }
 }
