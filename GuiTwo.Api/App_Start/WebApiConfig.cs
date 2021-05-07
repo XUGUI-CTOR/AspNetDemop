@@ -19,6 +19,7 @@ namespace GuiTwo.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            //config.Routes.MapHttpRoute(name: "def", routeTemplate: "");
         }
     }
 }
