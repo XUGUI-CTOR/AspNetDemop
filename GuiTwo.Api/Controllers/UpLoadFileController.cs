@@ -44,13 +44,16 @@ namespace GuiTwo.Api.Controllers
             if (StartPosition > Endposition)
                 return;
             //var IsFileExist = File.Exists(FullPath);
+            var dir = Path.GetDirectoryName(FileName);
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
             using (FileStream WriteFileStream = new FileStream(FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 StartPos = WriteFileStream.Length;
                 if (StartPos > Endposition)
                     return;
                 WriteFileStream.Seek(StartPos, SeekOrigin.Current);
-                byte[] datas = new byte[1024];
+                byte[] datas = new byte[1024*1024];
                 int nReadSize = FileStream.Read(datas, 0, datas.Length);
                 while (nReadSize > 0)
                 {
@@ -58,6 +61,16 @@ namespace GuiTwo.Api.Controllers
                     nReadSize = FileStream.Read(datas, 0, datas.Length);
                 }
             }
+        }
+        [HttpPost]
+        public HttpResponseMessage Upload([FromBody]string module)
+        {
+            var request = HttpContext.Current.Request;
+            if (request.Files.Count == 0)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            HttpPostedFile file = HttpContext.Current.Request.Files.Get(0);
+            Console.WriteLine(file.FileName);
+            return Request.CreateResponse(HttpStatusCode.OK, "UploadSuccess!");
         }
     }
 }

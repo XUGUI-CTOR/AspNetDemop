@@ -10,12 +10,12 @@
              Width="240">
     <StackPanel Background="Beige">
         <StackPanel Orientation="Horizontal">
-            <Label Margin="10" Target="{Binding ElementName=left}">Operand _1:</Label>
-            <TextBox x:Name="left" Margin="10" Width="72"/>
+            <Label Margin="10" Target="{Binding ElementName=Left}">Operand _1:</Label>
+            <TextBox x:Name="Left" Margin="10" Width="72"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Label Margin="10" Target="{Binding ElementName=right}">Operand _2:</Label>
-            <TextBox x:Name="right" Margin="10" Width="72"/>
+            <Label Margin="10" Target="{Binding ElementName=Right}">Operand _2:</Label>
+            <TextBox x:Name="Right" Margin="10" Width="72"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button Margin="5" x:Name="btnPlus" cal:Message.Attach="[Event Click]=[Action Plus(left.Text,right.Text):result.Text]">+</Button>
