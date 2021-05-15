@@ -15,9 +15,12 @@ namespace ASP.NET.MVC.Demo.Controllers
         private MovieDBContext db = new MovieDBContext();
 
         // GET: Movies
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
-            return View(db.Movies.ToList());
+            var lst = db.Movies as IQueryable<Movie>;
+            if (!string.IsNullOrWhiteSpace(search))
+                lst = lst.Where(x => x.Title.Contains(search));  
+            return View(lst);
         }
 
         // GET: Movies/Details/5
