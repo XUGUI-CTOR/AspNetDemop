@@ -13,9 +13,9 @@ namespace Gui.UploadExe.ViewModels
         {
 
         }
-        public async void ShowCalculator()
-        {
-           await ActivateItemAsync(new CalculatorViewModel());
-        }
+        //public async void ShowCalculator()
+        //{
+        //   await ActivateItemAsync(new CalculatorViewModel());
+        //}
     }
 }

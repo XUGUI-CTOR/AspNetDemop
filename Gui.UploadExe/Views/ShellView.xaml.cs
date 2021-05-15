@@ -22,6 +22,13 @@ namespace Gui.UploadExe.Views
         public ShellView()
         {
             InitializeComponent();
+            this.Loaded += ShellView_Loaded;
+        }
+
+        private void ShellView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Binding binding = new Binding();
+            binding.Converter = new HandyControl.Tools.Converter.Boolean2BooleanReConverter();
         }
     }
 }
