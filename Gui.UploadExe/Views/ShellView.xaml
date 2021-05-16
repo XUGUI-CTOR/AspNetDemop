@@ -9,7 +9,9 @@
         mc:Ignorable="d" FontSize="14"
         Title="Calculator" SizeToContent="Height" Width="240">
     <Grid MinHeight="200">
-        <Button Content="Show Calculator" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ShowCalculator" Grid.Row="0"></Button>
-        <ContentControl x:Name="ActiveItem"></ContentControl>
+        <Button x:Name="btn" Background="Black">
+            
+        </Button>
+        <Slider x:Name="sl" Minimum="0" Maximum="1"/>
     </Grid>
 </Window>

@@ -23,6 +23,7 @@ namespace Gui.UploadExe.Views
         public CalculatorView()
         {
             InitializeComponent();
+            
         }
     }
 }

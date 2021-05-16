@@ -15,10 +15,26 @@ namespace ASP.NET.MVC.Demo.Controllers
         private MovieDBContext db = new MovieDBContext();
 
         // GET: Movies
-        public ActionResult Index()
+        public ActionResult Index(string search,string movieGenre)
         {
-            return View(db.Movies.ToList());
+            var GenreLst = new List<string>();
+            GenreLst.AddRange((from d in db.Movies
+                               orderby d.Genre
+                               select d.Genre).Distinct());
+            ViewBag.movieGenre = new SelectList(GenreLst,"default");
+            IQueryable<Movie> moviesQuery = from m in db.Movies select m;
+            if (!string.IsNullOrWhiteSpace(search))
+                moviesQuery = moviesQuery.Where(x => x.Title.Contains(search));
+            if (!string.IsNullOrWhiteSpace(movieGenre))
+                moviesQuery = moviesQuery.Where(x => x.Genre == movieGenre);
+            return View(moviesQuery);
         }
+
+        //[HttpPost]
+        //public string Index(FormCollection fc, string searchString)
+        //{
+        //    return "<h3> From [HttpPost]Index: " + searchString + "</h3>";
+        //}
 
         // GET: Movies/Details/5
         public ActionResult Details(int? id)
