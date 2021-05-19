@@ -18,6 +18,8 @@ namespace ASP.NET.MVC.Demo.Models
         public string Genre { get; set; }
         [Display(Name = "票价")]
         public decimal Price { get; set; }
+        [Display(Name = "评级")]
+        public string Rating { get; set; }
     }
 
     public class MovieDBContext : DbContext

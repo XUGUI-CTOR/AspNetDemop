@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ConsoleApp2
@@ -8,29 +11,47 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-            string str = @"拜访客户:讯捷
-拜访类型：客户回访 
-拜访内容:面推机油活动易损件 成功一家 爱信变速箱油合作修理厂 现场下单一万二
-
-拜访客户：大连
-拜访类型:客户回访 
-拜访内容：面推机油活动易损件 成功一家 爱信变速箱油合作修理厂 现场下单一万二";
-            string pattern = "^拜访客户(:|：).+\n拜访类型(:|：).+\n拜访内容(:|：).+\n{0,1}$";
-            
-            foreach (Match item in Regex.Matches(str, pattern, RegexOptions.Multiline))
-            {
-                Dictionary<string, string> dics = new Dictionary<string, string>();
-                var spiltStrs = item.Value.Split('\n');
-                for (int i = 0; i < 3; i++)
-                {
-                    var keyValue = spiltStrs[i].Split(':', '：');
-                    dics.Add(keyValue[0], keyValue[1]);
-                }
-                foreach (var keyValuePair in dics)
-                {
-                    Console.WriteLine($"{keyValuePair.Key} => {keyValuePair.Value}");
-                }
-            }
+            Console.WriteLine(DESEnCode("abc"));
         }
+        public static string GetMD5(string s, string _input_charset)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] t = md5.ComputeHash(
+            Encoding.GetEncoding(_input_charset).GetBytes(s)
+            );
+            StringBuilder sb = new StringBuilder(32);
+            for (int i = 0; i < t.Length; i++)
+            {
+                sb.Append(t[i].ToString("x").PadLeft(2, '0'));
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// DES 加密。
+        /// </summary>
+        /// <param name="pToEncrypt">明文。</param>
+        /// <param name="sKey">密钥。</param>
+        /// <returns>返回密文。</returns>
+        static string DESEnCode(string pToEncrypt, string sKey = "12345678")
+        {
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            byte[] inputByteArray = Encoding.GetEncoding("UTF-8")
+            .GetBytes(pToEncrypt);
+            des.Key = ASCIIEncoding.ASCII.GetBytes(sKey);
+            des.IV = ASCIIEncoding.ASCII.GetBytes(sKey);
+            MemoryStream ms = new MemoryStream();
+            CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(),
+           CryptoStreamMode.Write);
+            cs.Write(inputByteArray, 0, inputByteArray.Length);
+            cs.FlushFinalBlock();
+            StringBuilder ret = new StringBuilder();
+            foreach (byte b in ms.ToArray())
+            {
+                ret.AppendFormat("{0:X2}", b);
+            }
+            return ret.ToString(); ;
+        }
+
     }
 }

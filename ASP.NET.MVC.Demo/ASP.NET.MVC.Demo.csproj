@@ -135,6 +135,10 @@
     <Compile Include="Migrations\202105150925442_initial.Designer.cs">
       <DependentUpon>202105150925442_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105190319493_AddFieldRatig.cs" />
+    <Compile Include="Migrations\202105190319493_AddFieldRatig.Designer.cs">
+      <DependentUpon>202105190319493_AddFieldRatig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -200,6 +204,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202105150925442_initial.resx">
       <DependentUpon>202105150925442_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105190319493_AddFieldRatig.resx">
+      <DependentUpon>202105190319493_AddFieldRatig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
