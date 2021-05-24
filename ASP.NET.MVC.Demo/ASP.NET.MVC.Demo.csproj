@@ -139,6 +139,14 @@
     <Compile Include="Migrations\202105190319493_AddFieldRatig.Designer.cs">
       <DependentUpon>202105190319493_AddFieldRatig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105220314565_DataAnnotations.cs" />
+    <Compile Include="Migrations\202105220314565_DataAnnotations.Designer.cs">
+      <DependentUpon>202105220314565_DataAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105220319003_DataAnnotations2.cs" />
+    <Compile Include="Migrations\202105220319003_DataAnnotations2.Designer.cs">
+      <DependentUpon>202105220319003_DataAnnotations2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,6 +215,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105190319493_AddFieldRatig.resx">
       <DependentUpon>202105190319493_AddFieldRatig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105220314565_DataAnnotations.resx">
+      <DependentUpon>202105220314565_DataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105220319003_DataAnnotations2.resx">
+      <DependentUpon>202105220319003_DataAnnotations2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
