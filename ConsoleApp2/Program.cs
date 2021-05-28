@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,7 +12,7 @@ namespace ConsoleApp2
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main2(string[] args)
         {
             int timeout = -1;
             string uri = "http://csfile2.bcunite.com/temp/2021/5/21/2021052112490758361579_tmp287604list1621601342.jpg";
@@ -44,6 +45,39 @@ namespace ConsoleApp2
             {
                 fileStream.Write(datas.ToArray(), 0, datas.Count);
             }
+        }
+        private static readonly List<Person> PersonLists = new List<Person>()
+    {
+                new Person { Name = "张三",Age = 20,Gender = "男",
+                    Phones = new List<Phone> {
+                        new Phone { Country = "中国", City = "北京", Name = "小米" },
+                        new Phone { Country = "中国",City = "北京",Name = "华为"},
+                        new Phone { Country = "中国",City = "北京",Name = "联想"},
+                        new Phone { Country = "中国",City = "台北",Name = "魅族"},
+                        }
+                },
+                new Person { Name = "松下",Age = 30,Gender = "男",
+                    Phones = new List<Phone> {
+                        new Phone { Country = "日本",City = "东京",Name = "索尼"},
+                        new Phone { Country = "日本",City = "大阪",Name = "夏普"},
+                        new Phone { Country = "日本",City = "东京",Name = "松下"},
+                    }
+                },
+                new Person { Name = "克里斯",Age = 40,Gender = "男",
+                    Phones = new List<Phone> {
+                        new Phone { Country = "美国",City = "加州",Name = "苹果"},
+                        new Phone { Country = "美国",City = "华盛顿",Name = "三星"},
+                        new Phone { Country = "美国",City = "华盛顿",Name = "HTC"}
+                    }
+                }
+    };
+        static void Main()
+        {
+            Expression<Func<Person, bool>> expression = x => x.Gender == "男" && x.Name == "克里斯";
+            expression = expression.ExpressionAnd(x=>x.Age > 30);
+            var res = PersonLists.Where(expression.Compile());
+            Console.WriteLine(res.Count());
+            Console.WriteLine();
         }
         public static List<byte> Url_To_Byte(String filePath)
         {
@@ -112,5 +146,56 @@ namespace ConsoleApp2
             return ret.ToString(); ;
         }
 
+    }
+    public class Person
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public int Age { get; set; }
+        public List<Phone> Phones { get; set; }
+
+    }
+    public class Phone
+    {
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Name { get; set; }
+    }
+    public static class ExpresstionExtension
+    {
+        private static Expression<T> Combine<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
+        {
+            MyExpressionVisitor visitor = new MyExpressionVisitor(first.Parameters[0]);
+            Expression bodyone = visitor.Visit(first.Body);
+            Expression bodytwo = visitor.Visit(second.Body);
+            return Expression.Lambda<T>(merge(bodyone, bodytwo), first.Parameters[0]);
+        }
+        public static Expression<Func<T, bool>> ExpressionAnd<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+        {
+            return first.Combine(second, Expression.And);
+        }
+        public static Expression<Func<T, bool>> ExpressionOr<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+        {
+            return first.Combine(second, Expression.Or);
+        }
+    }
+
+    internal class MyExpressionVisitor : ExpressionVisitor
+    {
+        public ParameterExpression _Parameter { get; set; }
+
+        public MyExpressionVisitor(ParameterExpression Parameter)
+        {
+            _Parameter = Parameter;
+        }
+        protected override Expression VisitParameter(ParameterExpression p)
+        {
+            return _Parameter;
+        }
+
+        public override Expression Visit(Expression node)
+        {
+            return base.Visit(node);//Visit会根据VisitParameter()方法返回的Expression修改这里的node变量
+        }
     }
 }
