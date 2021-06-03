@@ -129,6 +129,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Core\Interface\IValueCalculator .cs" />
+    <Compile Include="Core\LinqValueCalculator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
