@@ -8,59 +8,121 @@ namespace ConsoleApp2
 {
     public class IGame
     {
-
-    }
-    internal class Monster
-    {
-        public string Name { get; set; }
-        public int HP { get; set; }
-
-        public void Notity(int damageValue)
+        static void Main(string[] args)
         {
-            HP -= damageValue;
-            Console.WriteLine($"给与怪物{Name}{damageValue}伤害");
-            if(HP<=0)
-                Console.WriteLine($"怪物{Name}挂了");
-            else
-                Console.WriteLine($"怪物还剩{HP}HP");
+            var list = new List<int>();
+            Console.WriteLine(list.DefaultIfEmpty().Count());
         }
     }
-    interface IAttackStrategy
+    namespace IGames
     {
-        void AttackTarget(Monster monster);
-    }
-    internal sealed class WoodSword : IAttackStrategy
-    {
-        public void AttackTarget(Monster monster)
+        internal class Monster
         {
-            monster.Notity(20);
+            public string Name { get; set; }
+            public int HP { get; set; }
+
+            public void Notity(int damageValue)
+            {
+                HP -= damageValue;
+                Console.WriteLine($"给与怪物{Name}{damageValue}伤害");
+                if (HP <= 0)
+                    Console.WriteLine($"怪物{Name}挂了");
+                else
+                    Console.WriteLine($"怪物还剩{HP}HP");
+            }
+        }
+        interface IAttackStrategy
+        {
+            void AttackTarget(Monster monster);
+        }
+        internal sealed class WoodSword : IAttackStrategy
+        {
+            public void AttackTarget(Monster monster)
+            {
+                monster.Notity(20);
+            }
+        }
+
+        internal sealed class IronSword : IAttackStrategy
+        {
+            public void AttackTarget(Monster monster)
+            {
+                monster.Notity(50);
+            }
+        }
+
+        internal sealed class MagicSword : IAttackStrategy
+        {
+            private readonly Random random = new Random();
+            public void AttackTarget(Monster monster)
+            {
+                int damageValue = random.NextDouble() > 0.5 ? 200 : 100;
+                monster.Notity(damageValue);
+            }
+        }
+
+        internal class BraveMan
+        {
+            public BraveMan(IAttackStrategy weapon)
+            {
+                Weapon = weapon;
+            }
+
+            public IAttackStrategy Weapon { get; }
+
+            public void Attack(Monster monster)
+            {
+                Weapon.AttackTarget(monster);
+            }
         }
     }
 
-    internal sealed class IronSword : IAttackStrategy
+    namespace Factory
     {
-        public void AttackTarget(Monster monster)
+        interface IWindow
         {
-            monster.Notity(50);
+            void ShowWindow();
         }
-    }
+        interface IButton
+        {
+            void ShowButton();
+        }
+        interface ITextBox
+        {
+            void ShowContent();
+        }
+        public class WindowsWindow : IWindow
+        {
+            public void ShowWindow()
+            {
+                Console.WriteLine("Windows的窗体");
+            }
+        }
+        public class MacWindow : IWindow
+        {
+            public void ShowWindow()
+            {
+                Console.WriteLine("MAC的窗体");
+            }
+        }
+        public class WindowsButton : IWindow
+        {
+            public void ShowWindow()
+            {
+                Console.WriteLine("Windows的按钮");
+            }
+        }
+        public class MacButton : IButton
+        {
+            public void ShowButton()
+            {
+                Console.WriteLine("Mac的按钮");
+            }
+        }
 
-    internal sealed class MagicSword : IAttackStrategy
-    {
-        private readonly Random random = new Random();
-        public void AttackTarget(Monster monster)
-        {
-            int damageValue = random.NextDouble() > 0.5 ? 200 : 100;
-            monster.Notity(damageValue);
-        }
     }
-
-    internal class BraveMan
+    namespace Reflection
     {
-        public IAttackStrategy Weapon { get; set; }
-        public void Attack(Monster monster)
-        {
-            Weapon.AttackTarget(monster);
-        }
+
     }
 }
