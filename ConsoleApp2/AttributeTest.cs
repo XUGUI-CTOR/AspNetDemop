@@ -11,11 +11,8 @@ namespace ConsoleApp2
     {
         public static void Main(string[] args)
         {
-            Order order = new Order();
-            order.OrderID = "20201212";
-            IsVaild(order);
-
         }
+       
         private static bool IsVaild(Order order)
         {
             foreach (var propertyInfo in order.GetType().GetProperties(BindingFlags.Public|BindingFlags.Instance))
@@ -77,6 +74,6 @@ namespace ConsoleApp2
 
     public interface IValueCalculator
     {
-
+        //decimal ValueProducts(params Product)
     }
 }
