@@ -1,16 +1,104 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace AsyncDemo
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main1(string[] args)
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            //AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //GetClosureFunction()(30);
-            new Thread(() => throw new Exception("NUMD")).Start();
-            
+            //new Thread(() => throw new Exception("NUMD")).Start();
+            Task<int> primeNumberTask = Task.Run<int>(() => Enumerable.Range(2, 3000000)
+            .Count(n => Enumerable.Range(2, (int)Math.Sqrt(n) - 1).All(i => n % i > 0))
+            );
+            Console.WriteLine("Task Running......");
+            Console.WriteLine($"The answer is {primeNumberTask.Result}");
+        }
+
+        public static void Main2(string[] args)
+        {
+            //Delay(3000).GetAwaiter().OnCompleted(() => { Console.WriteLine("OK"); });
+            //Task.Delay(5000).con
+            //Console.ReadKey();
+        }
+
+        public static async Task Main(string[] args)
+        {
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui0");
+            await async1();
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui0.5");
+        }
+        private static async Task async1()
+        {
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui1");
+            await async2();
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui3");
+        }
+        private static async Task async2()
+        {
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui2");
+            await Task.Delay(1000);
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui2.5");
+        }
+        static async Task<string> DO1()
+        {
+            Task.Delay(5000);
+            return nameof(DO1);
+        }
+       
+        static async Task<string> DO2()
+        {
+            await Task.Delay(5000);
+            return nameof(DO2);
+        }
+
+        static Task<int> GetAnswerToLife()
+        {
+            var tcs = new TaskCompletionSource<int>();
+            var timer = new System.Timers.Timer(5000) { AutoReset = false };
+            timer.Elapsed += (s,e) => { timer.Dispose(); tcs.SetResult(42); };
+            timer.Start();
+            return tcs.Task;
+        }
+
+        public static Task Delay(int milliseconds)
+        {
+            var tcs = new TaskCompletionSource<object>();
+            var timer = new System.Timers.Timer(milliseconds) { AutoReset = false };
+            timer.Elapsed += (s, e) => { timer.Dispose(); tcs.SetResult(default); };
+            timer.Start();
+            return tcs.Task;
+        }
+
+        public static async void dosomething()
+        {
+            int dosometing()
+            {
+                Thread.Sleep(1000);
+                return 2;
+            }
+            Console.WriteLine(await Run(dosometing));
+           
+        }
+
+        static Task<TResult> Run<TResult>(Func<TResult> func)
+        {
+            TaskCompletionSource<TResult> tcs = new TaskCompletionSource<TResult>();
+            new Thread(() => {
+                try
+                {
+                    tcs.SetResult(func());
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            }) { IsBackground = true, }.Start();
+            return tcs.Task;
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
