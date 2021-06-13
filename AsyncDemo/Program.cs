@@ -28,7 +28,7 @@ namespace AsyncDemo
 
         public static async Task Main(string[] args)
         {
-            Console.WriteLine("he");
+            
         }
     
         
