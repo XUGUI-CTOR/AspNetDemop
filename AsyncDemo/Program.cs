@@ -28,33 +28,10 @@ namespace AsyncDemo
 
         public static async Task Main(string[] args)
         {
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui0");
-            await async1();
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui0.5");
+            
         }
-        private static async Task async1()
-        {
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui1");
-            await async2();
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui3");
-        }
-        private static async Task async2()
-        {
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui2");
-            await Task.Delay(1000);
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " Gui2.5");
-        }
-        static async Task<string> DO1()
-        {
-            Task.Delay(5000);
-            return nameof(DO1);
-        }
-       
-        static async Task<string> DO2()
-        {
-            await Task.Delay(5000);
-            return nameof(DO2);
-        }
+    
+        
 
         static Task<int> GetAnswerToLife()
         {
