@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDemo", "AsyncDemo\Asyn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjectTest", "NinjectTest\NinjectTest.csproj", "{62CD3C6F-F425-4BBD-90AF-644E2D51647F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.WebUI", "BookShop.WebUI\BookShop.WebUI.csproj", "{ADEA7751-2E1F-4C0C-9D25-35676468C9D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.Domain", "BookShop.Domain\BookShop.Domain.csproj", "{58A4ABC9-125C-4026-88B1-993FE9B54C20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{62CD3C6F-F425-4BBD-90AF-644E2D51647F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62CD3C6F-F425-4BBD-90AF-644E2D51647F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62CD3C6F-F425-4BBD-90AF-644E2D51647F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADEA7751-2E1F-4C0C-9D25-35676468C9D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADEA7751-2E1F-4C0C-9D25-35676468C9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADEA7751-2E1F-4C0C-9D25-35676468C9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADEA7751-2E1F-4C0C-9D25-35676468C9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A4ABC9-125C-4026-88B1-993FE9B54C20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A4ABC9-125C-4026-88B1-993FE9B54C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A4ABC9-125C-4026-88B1-993FE9B54C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A4ABC9-125C-4026-88B1-993FE9B54C20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
