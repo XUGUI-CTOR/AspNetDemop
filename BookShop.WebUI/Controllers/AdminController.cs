@@ -6,12 +6,14 @@ using System.Web.Mvc;
 
 namespace BookShop.WebUI.Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
-        public ActionResult Index()
+        // GET: Admin
+        public ActionResult Index(string id)
         {
-            ViewBag.Controller = "Home";
+            ViewBag.Controller = "Admin";
             ViewBag.Action = "Index";
+            ViewBag.Id = id;
             return View("ActionName");
         }
     }

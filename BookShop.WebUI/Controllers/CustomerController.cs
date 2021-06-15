@@ -6,12 +6,20 @@ using System.Web.Mvc;
 
 namespace BookShop.WebUI.Controllers
 {
-    public class HomeController : Controller
+    public class CustomerController : Controller
     {
+        // GET: Customer
         public ActionResult Index()
         {
-            ViewBag.Controller = "Home";
+            ViewBag.Controller = "Customer";
             ViewBag.Action = "Index";
+            return View("ActionName");
+        }
+
+        public ActionResult List()
+        {
+            ViewBag.Controller = "Customer";
+            ViewBag.Action = "List";
             return View("ActionName");
         }
     }
