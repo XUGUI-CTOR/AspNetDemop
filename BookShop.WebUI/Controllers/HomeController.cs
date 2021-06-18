@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookShop.WebUI.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,9 +11,16 @@ namespace BookShop.WebUI.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Controller = "Home";
-            ViewBag.Action = "Index";
-            return View("ActionName");
+            
+            if (Server.MachineName == "DESKTOP-8DIP9B2")
+            {
+                return new CustomRedirectResult("Basic/Index");
+            }
+            else
+            {
+                Response.Write(Server.MachineName);
+                return null;
+            }
         }
     }
 }

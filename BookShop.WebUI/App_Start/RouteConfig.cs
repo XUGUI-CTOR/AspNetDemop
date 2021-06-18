@@ -14,7 +14,7 @@ namespace BookShop.WebUI
         {
             routes.MapRoute("NewRoute", "App/{action}", new { controller = "Home" });
             //routes.MapRoute("defaultRoute", "{controller}/{action}/{Id}/{*catchall}",new {controller="home",action="Index",Id=UrlParameter.Optional });
-            routes.MapRoute("defaultRoute", "{controller}/{action}/{Id}", new { controller = "home", action = "Index", Id = UrlParameter.Optional },new {controller="^H.*", custom = new UserAgentConstraint("Chrome") });
+            routes.MapRoute("defaultRoute", "{controller}/{action}/{Id}", new { controller = "home", action = "Index", Id = UrlParameter.Optional },namespaces:new[] { "BookShop.WebUI.Controllers" });
             //"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"
         }
     }

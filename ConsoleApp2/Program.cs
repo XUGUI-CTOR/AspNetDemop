@@ -7,7 +7,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-
+using Newtonsoft.Json.Linq;
 namespace ConsoleApp2
 {
     class Program
@@ -73,11 +73,7 @@ namespace ConsoleApp2
     };
         static void Main()
         {
-            Expression<Func<Person, bool>> expression = x => x.Gender == "男" && x.Name == "克里斯";
-            expression = expression.ExpressionAnd(x => x.Age > 30);
-            var res = PersonLists.Where(expression.Compile());
-            Console.WriteLine(res.Count());
-            Console.WriteLine();
+           
 
         }
         public static List<byte> Url_To_Byte(String filePath)
