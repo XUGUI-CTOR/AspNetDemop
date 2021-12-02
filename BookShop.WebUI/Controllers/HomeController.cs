@@ -11,16 +11,20 @@ namespace BookShop.WebUI.Controllers
     {
         public ActionResult Index()
         {
-            
-            if (Server.MachineName == "DESKTOP-8DIP9B2")
-            {
-                return new CustomRedirectResult("Basic/Index");
-            }
-            else
-            {
-                Response.Write(Server.MachineName);
-                return null;
-            }
+            string[] names = { "Apple", "Orange", "Pear" };
+            return View(names);
+        }
+        [HandleError(ExceptionType = typeof(Exception),View = "RangeError")]
+        public ActionResult RangeTest(int id)
+        {
+            if(id > 100)
+                return Content($"This value is :{id}");
+            throw new ArgumentOutOfRangeException("id", id, "{0}低于限定长度");
+        }
+        [ProfileAction]
+        public string FilterTest()
+        {
+            return "This is the ActionFilterTest action";
         }
     }
 }

@@ -28,7 +28,7 @@ namespace AsyncDemo
 
         public static async Task Main(string[] args)
         {
-            
+            Enumerable.Range(1, 10).ToList().ForEach(Console.WriteLine);
         }
     
         
